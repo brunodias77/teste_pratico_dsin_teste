@@ -23,7 +23,7 @@ import java.util.HashSet;
 public class User extends BaseEntity {
 
     @NotBlank(message = "O campo nome não pode ficar em branco")
-    private String firstName;
+    private String name;
 
     @Column(name = "phone_number")
     @NotBlank(message = "O campo telefone não pode ficar em branco")

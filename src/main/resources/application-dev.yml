@@ -1,19 +1,19 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/dsin
-    username: admin
-    password: admin
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:mem:dsin
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: false
     properties:
       hibernate:
-        format_sql: true
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    open-in-view: false
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+
 application:
   security:
     jwt:
