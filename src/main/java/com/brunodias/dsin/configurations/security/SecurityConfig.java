@@ -58,6 +58,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/appointment/**").authenticated()
                         .anyRequest().permitAll());
         http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
         http.authenticationProvider(authenticationProvider());
