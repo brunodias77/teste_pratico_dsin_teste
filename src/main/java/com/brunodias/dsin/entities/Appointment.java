@@ -22,7 +22,7 @@ import java.util.HashSet;
 @Setter
 public class Appointment extends BaseEntity {
 
-    private LocalDateTime appointmentDate;
+    private LocalDateTime appointmentDateTime;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
