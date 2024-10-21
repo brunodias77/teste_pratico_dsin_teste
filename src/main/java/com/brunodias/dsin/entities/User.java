@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -42,4 +43,8 @@ public class User extends BaseEntity {
             CascadeType.MERGE, CascadeType.DETACH })
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "client")
+    private List<Appointment> appointments;
+
 }
