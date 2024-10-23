@@ -1,10 +1,12 @@
 package com.brunodias.dsin.controllers;
 
 import com.brunodias.dsin.communications.appointments.RequestCreateAppointment;
+import com.brunodias.dsin.communications.appointments.RequestUpdateAppointment;
 import com.brunodias.dsin.dtos.AppointmentDetailsDTO;
 import com.brunodias.dsin.dtos.BaseResponseDTO;
 import com.brunodias.dsin.useCases.appointments.createAppointment.CreateAppointmentUseCase;
 import com.brunodias.dsin.useCases.appointments.getDetailsAppointment.IGetDetailsAppointmentUseCase;
+import com.brunodias.dsin.useCases.appointments.updateAppointment.UpdateApppointmentUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -27,6 +29,7 @@ public class AppointmentController {
 
     private final CreateAppointmentUseCase _createAppointmentUseCase;
     private final IGetDetailsAppointmentUseCase _getDetailsAppointmentUseCase;
+    private final UpdateApppointmentUseCase _updateApppointmentUseCase;
 
     @PostMapping("/create")
     @PreAuthorize("isAuthenticated()")
@@ -66,6 +69,27 @@ public class AppointmentController {
             return ResponseEntity.ok(appointmentDetails);
         } catch (Exception err) {
             return ResponseEntity.status(404).body(null);
+        }
+    }
+    @PutMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Atualizar Agendamento", description = "Rota para atualizar um agendamento existente pelo ID. O usuário deve estar logado.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Agendamento atualizado com sucesso", content = {
+                    @Content(schema = @Schema(implementation = BaseResponseDTO.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Erro de validação ao atualizar o agendamento"),
+            @ApiResponse(responseCode = "404", description = "Agendamento não encontrado")
+    })
+    public ResponseEntity<BaseResponseDTO> updateAppointment(@PathVariable UUID id, @RequestBody @Valid RequestUpdateAppointment request) {
+        try {
+            var result = this._updateApppointmentUseCase.execute(id, request);
+            return ResponseEntity.status(result.getStatus()).body(result);
+        } catch (Exception err) {
+            return ResponseEntity.status(400).body(BaseResponseDTO.builder()
+                    .status(400)
+                    .message(err.getMessage())
+                    .build());
         }
     }
 }

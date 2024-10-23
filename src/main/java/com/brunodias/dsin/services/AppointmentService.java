@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -19,12 +20,5 @@ public class AppointmentService {
 
     public List<com.brunodias.dsin.entities.Service> findExistingServices(List<UUID> serviceIds) {
         return _serviceRepository.findAllById(serviceIds);
-    }
-
-    public boolean servicesAvailable(List<UUID> serviceIds, LocalDateTime appointmentDateTime) {
-        for (UUID serviceId : serviceIds) {
-
-        }
-        return true;
     }
 }

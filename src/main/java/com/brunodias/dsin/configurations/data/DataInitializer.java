@@ -55,7 +55,7 @@ public class DataInitializer {
                         userRepository.save(user);
 
                         Appointment appointment = Appointment.builder()
-                                        .appointmentDateTime(LocalDateTime.parse("2024-10-22T14:30:00",
+                                        .appointmentDateTime(LocalDateTime.parse("2024-10-25T14:00:00",
                                                         DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                                         .status(AppoitmentStatus.AGENDADO)
                                         .client(user)
