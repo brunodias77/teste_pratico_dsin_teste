@@ -1,6 +1,8 @@
 package com.brunodias.dsin.entities;
 
 import com.brunodias.dsin.enums.AppoitmentStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

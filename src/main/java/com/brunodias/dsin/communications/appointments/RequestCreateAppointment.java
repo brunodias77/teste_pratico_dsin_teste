@@ -11,7 +11,7 @@ import java.util.UUID;
 public record RequestCreateAppointment(
         @NotNull(message = "A lista de serviços não pode estar vazia.")
         @NotEmpty(message = "É necessário selecionar ao menos um serviço.")
-        List<UUID> serviceIds,
+        UUID serviceId,
 
         @NotNull(message = "A data e hora do agendamento são obrigatórias.")
         @Future(message = "A data do agendamento deve ser no futuro.")

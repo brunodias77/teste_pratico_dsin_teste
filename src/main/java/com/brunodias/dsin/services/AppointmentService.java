@@ -21,12 +21,9 @@ public class AppointmentService {
         return _serviceRepository.findAllById(serviceIds);
     }
 
-    public boolean areServicesAvailable(List<UUID> serviceIds, LocalDateTime appointmentDateTime) {
+    public boolean servicesAvailable(List<UUID> serviceIds, LocalDateTime appointmentDateTime) {
         for (UUID serviceId : serviceIds) {
-            List<Appointment> conflictingAppointments = _appointmentRepository.findByServiceIdAndAppointmentDateTime(serviceId, appointmentDateTime);
-            if (!conflictingAppointments.isEmpty()) {
-                return false;
-            }
+
         }
         return true;
     }

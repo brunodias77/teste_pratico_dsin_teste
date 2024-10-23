@@ -2,6 +2,9 @@ package com.brunodias.dsin.entities;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -19,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 public class AppointmentService extends BaseEntity {
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "appointment_id", nullable = false)
     private Appointment appointment;

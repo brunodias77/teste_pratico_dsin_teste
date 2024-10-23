@@ -10,8 +10,20 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, UUID> {
+        @Query("SELECT s.id, s.name, s.price, a.appointmentDateTime, u.name " +
+                "FROM Appointment a " +
+                "JOIN a.client u " +
+                "JOIN a.services sa " +
+                "JOIN sa.service s " +
+                "WHERE a.appointmentDateTime = :dateTime AND s.id = :serviceId")
+        List<Object[]> findAppointmentDetailsByDateTime(@Param("dateTime") LocalDateTime dateTime, @Param("serviceId") UUID serviceId);
 
-    @Query("SELECT a FROM Appointment a JOIN a.services s WHERE s.id = :serviceId AND a.appointmentDateTime = :appointmentDateTime")
-    List<Appointment> findByServiceIdAndAppointmentDateTime(@Param("serviceId") UUID serviceId,
-            @Param("appointmentDateTime") LocalDateTime appointmentDateTime);
+        // @Query("SELECT s.name, s.price, a.appointmentDateTime, u.name " +
+        // "FROM Appointment a " +
+        // "JOIN a.client u " +
+        // "JOIN a.services sa " +
+        // "JOIN sa.service s " +
+        // "WHERE a.appointmentDateTime = :dateTime")
+        // List<Object[]> findAppointmentDetailsByDateTime(@Param("dateTime")
+        // LocalDateTime dateTime);
 }
