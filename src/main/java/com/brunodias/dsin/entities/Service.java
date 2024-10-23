@@ -10,6 +10,10 @@ import lombok.experimental.SuperBuilder;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.mapping.Collection;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "services")
 @NoArgsConstructor
@@ -28,7 +32,8 @@ public class Service extends BaseEntity {
     @Column(nullable = false)
     private double price;
 
-    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
-    private Set<AppointmentService> appointments = new HashSet<>();
+    @JsonIgnore
+    @ManyToMany(mappedBy = "services")
+    private Set<Appointment> appointments = new HashSet<>();
 
 }

@@ -13,6 +13,9 @@ import lombok.experimental.SuperBuilder;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+
+import org.hibernate.mapping.Collection;
+
 import java.util.HashSet;
 
 @Entity
@@ -30,8 +33,10 @@ public class Appointment extends BaseEntity {
     @Column(nullable = false)
     private AppoitmentStatus status;
 
-    @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL)
-    private Set<AppointmentService> services = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE, CascadeType.DETACH })
+    @JoinTable(name = "appointment_service", joinColumns = @JoinColumn(name = "appointment_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "service_id", referencedColumnName = "id"))
+    private Set<Service> services = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
