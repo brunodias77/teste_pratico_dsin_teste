@@ -19,21 +19,11 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
         List<Object[]> findAppointmentDetailsByDateTime(@Param("dateTime") LocalDateTime dateTime,
                         @Param("serviceId") UUID serviceId);
 
-        // @Query("SELECT s.id, s.name, s.price, a.appointmentDateTime, u.name " +
-        // "FROM Appointment a " +
-        // "JOIN a.client u " +
-        // "JOIN a.services sa " +
-        // "JOIN sa.service s " +
-        // "WHERE a.appointmentDateTime = :dateTime AND s.id = :serviceId")
-        // List<Object[]> findAppointmentDetailsByDateTime(@Param("dateTime")
-        // LocalDateTime dateTime, @Param("serviceId") UUID serviceId);
-
-        // @Query("SELECT s.name, s.price, a.appointmentDateTime, u.name " +
-        // "FROM Appointment a " +
-        // "JOIN a.client u " +
-        // "JOIN a.services sa " +
-        // "JOIN sa.service s " +
-        // "WHERE a.appointmentDateTime = :dateTime")
-        // List<Object[]> findAppointmentDetailsByDateTime(@Param("dateTime")
-        // LocalDateTime dateTime);
+        @Query("SELECT a.id AS appointmentId, a.appointmentDateTime AS appointmentDateTime, " +
+                "a.status AS status, u.name AS clientName, u.phoneNumber AS clientPhoneNumber, " +
+                "s AS service FROM Appointment a " +
+                "JOIN a.client u " +
+                "JOIN a.services s " +
+                "WHERE a.id = :appointmentId")
+        List<Object[]> findAppointmentDetailsById(UUID appointmentId);
 }

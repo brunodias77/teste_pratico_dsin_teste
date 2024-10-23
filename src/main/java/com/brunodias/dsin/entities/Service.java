@@ -1,5 +1,6 @@
 package com.brunodias.dsin.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,7 +33,8 @@ public class Service extends BaseEntity {
     @Column(nullable = false)
     private double price;
 
-    @JsonIgnore
+    @JsonBackReference
+    @Transient
     @ManyToMany(mappedBy = "services")
     private Set<Appointment> appointments = new HashSet<>();
 
