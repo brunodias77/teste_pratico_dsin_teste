@@ -39,6 +39,7 @@ public class UpdateApppointmentUseCase implements IUpdateAppointmentUseCase {
                     .message("O agendamento só pode ser alterado até 2 dias antes da data marcada. Para alterações, contate pelo telefone.")
                     .build();
         }
+        // Sugerir ao cliente que faca seus agendamentos todos no mesmo dia
         appointment.setAppointmentDateTime(request.getAppointmentDateTime());
         _appointmentRepository.save(appointment);
         String formattedDateTime = formatAppointmentDateTime(request.getAppointmentDateTime());

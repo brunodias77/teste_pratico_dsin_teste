@@ -21,4 +21,7 @@ public class AppointmentService {
     public List<com.brunodias.dsin.entities.Service> findExistingServices(List<UUID> serviceIds) {
         return _serviceRepository.findAllById(serviceIds);
     }
+    public List<Appointment> getAllAppointmentByUserId(){
+       return null;
+    }
 }

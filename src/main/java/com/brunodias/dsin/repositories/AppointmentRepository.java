@@ -1,6 +1,7 @@
 package com.brunodias.dsin.repositories;
 
 import com.brunodias.dsin.entities.Appointment;
+import com.brunodias.dsin.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,4 +27,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
                 "JOIN a.services s " +
                 "WHERE a.id = :appointmentId")
         List<Object[]> findAppointmentDetailsById(UUID appointmentId);
+
+        List<Appointment> findAllByClientId(UUID clientId);
+
 }

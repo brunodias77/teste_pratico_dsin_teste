@@ -30,49 +30,60 @@ public class DataInitializer {
         CommandLineRunner loadData() {
                 return args -> {
 
-                        User admin = User.builder()
-                                        .name("Leila Silva")
-                                        .phoneNumber("+55 11 91234-5678")
-                                        .email("leila@admin.com")
-                                        .roles(new HashSet<>())
-                                        .password(passwordEncoder.encode("@admin123")) // Criptografando a senha
-                                        .build();
-                        var adminRole = Role.builder().name("ROLE_ADMIN").build();
 
-                        User user = User.builder()
-                                        .name("Bruno Dias")
-                                        .phoneNumber("+55 11 98765-4321")
-                                        .email("bruno@teste.com")
-                                        .roles(new HashSet<>())
-                                        .password(passwordEncoder.encode("@teste123"))
-                                        .build();
-                        var userRole = Role.builder().name("ROLE_USER").build();
+                        var user = createFictitiousUsers();
+                        crateAppointmentsFictitious(user);
 
-                        admin.getRoles().add(adminRole);
-                        user.getRoles().add(userRole);
-
-                        userRepository.save(admin);
-                        userRepository.save(user);
-
-                        Appointment appointment = Appointment.builder()
-                                        .appointmentDateTime(LocalDateTime.parse("2024-10-25T14:00:00",
-                                                        DateTimeFormatter.ISO_LOCAL_DATE_TIME))
-                                        .status(AppoitmentStatus.AGENDADO)
-                                        .client(user)
-                                        .services(new HashSet<>())
-                                        .build();
-
-                        var corteCabeloMasculino = Service.builder()
-                                        .name("Corte de Cabelo Masculino")
-                                        .description("Corte de cabelo masculino moderno e estiloso.")
-                                        .price(50.0)
-                                        .build();
-                        appointment.getServices().add(corteCabeloMasculino);
-                        _appointmentRepository.save(appointment);
                 };
         }
+
+        private User createFictitiousUsers(){
+                User admin = User.builder()
+                        .name("Leila Silva")
+                        .phoneNumber("+55 11 91234-5678")
+                        .email("leila@admin.com")
+                        .roles(new HashSet<>())
+                        .password(passwordEncoder.encode("@admin123")) // Criptografando a senha
+                        .build();
+                var adminRole = Role.builder().name("ROLE_ADMIN").build();
+
+                User user = User.builder()
+                        .name("Bruno Dias")
+                        .phoneNumber("+55 11 98765-4321")
+                        .email("bruno@teste.com")
+                        .roles(new HashSet<>())
+                        .password(passwordEncoder.encode("@teste123"))
+                        .build();
+                var userRole = Role.builder().name("ROLE_USER").build();
+
+                admin.getRoles().add(adminRole);
+                user.getRoles().add(userRole);
+
+                userRepository.save(admin);
+                userRepository.save(user);
+                return user;
+        }
+
+        private void crateAppointmentsFictitious(User user){
+                Appointment appointment = Appointment.builder()
+                        .appointmentDateTime(LocalDateTime.parse("2024-10-25T14:00:00",
+                                DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+                        .status(AppoitmentStatus.AGENDADO)
+                        .client(user)
+                        .services(new HashSet<>())
+                        .build();
+
+                var corteCabeloMasculino = Service.builder()
+                        .name("Corte de Cabelo Masculino")
+                        .description("Corte de cabelo masculino moderno e estiloso.")
+                        .price(50.0)
+                        .build();
+
+                appointment.getServices().add(corteCabeloMasculino);
+                _appointmentRepository.save(appointment);
+        }
 }
-//
+
 // Service corteCabeloFeminino = Service.builder()
 // .name("Corte de Cabelo Feminino")
 // .description("Corte de cabelo feminino com estilo e precisão.")
